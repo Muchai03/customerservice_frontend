@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:5000/feedback";
+const API_URL = "/feedback";
 
 function FeedbackForm() {
   const navigate = useNavigate();
@@ -33,9 +33,17 @@ function FeedbackForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post(API_URL, formData);
-    navigate("/feedbacks");
+
+    try {
+      await axios.post(API_URL, formData);
+      navigate("/feedbacks");
+    } catch (error) {
+      console.error("❌ Error submitting feedback:", error);
+
+      alert("Something went wrong while submitting your feedback. Please try again.");
+    }
   };
+
 
   return (
     <div style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
