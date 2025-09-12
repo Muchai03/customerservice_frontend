@@ -48,7 +48,7 @@ function FeedbackForm() {
   return (
     <div style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
       <h1 style={{ textAlign: "center", color: "#0066cc" }}>
-        💧 GIWASCO Customer Service Week Feedback
+        💧 GIWASCO Customer Service Month Feedback
       </h1>
       <form
         onSubmit={handleSubmit}
