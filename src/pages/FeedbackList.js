@@ -55,7 +55,7 @@ function FeedbackList() {
           </tr>
         </thead>
         <tbody>
-          {responses.map((r) => (
+          {responses?.map((r) => (
             <tr key={r.id}>
               <td style={{ border: "1px solid #ccc", padding: "8px" }}>{r.id}</td>
               <td style={{ border: "1px solid #ccc", padding: "8px" }}>{r.full_name}</td>
