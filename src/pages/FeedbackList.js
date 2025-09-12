@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const API_URL = "/feedback";
+const API_URL = "/api/feedback";
 
 function FeedbackList() {
   const [responses, setResponses] = useState([]);

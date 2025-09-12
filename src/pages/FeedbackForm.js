@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = "/feedback";
+const API_URL = "/api/feedback";
 
 function FeedbackForm() {
   const navigate = useNavigate();
