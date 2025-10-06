@@ -66,7 +66,7 @@ export default function CSWFeedbackForm() {
       <h1 style={{ textAlign: "center", color: "#0066cc" }}>
         💧 GIWASCO Customer Service Week Feedback
       </h1>
-
+      <p style={{ textAlign: "center", color: "#0066cc" }}>Thank you for being our valued customer. Please inform us to help us serve you better.</p>
       <form
         onSubmit={handleSubmit}
         style={{ display: "flex", flexDirection: "column", gap: "15px" }}
@@ -94,7 +94,7 @@ export default function CSWFeedbackForm() {
             name="days_with_water"
             value={formData.days_with_water}
             onChange={handleChange}
-            placeholder="e.g. 3 days"
+            placeholder="e.g. 7 days"
             style={{
               width: "100%",
               padding: "8px",
