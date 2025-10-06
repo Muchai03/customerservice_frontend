@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import FeedbackForm from "./pages/FeedbackForm";
 import FeedbackList from "./pages/FeedbackList";
 import "./App.css";
+import CSWFeedbackForm from "./pages/CSWFeedbackForm";
+import CSWFeedbackList from "./pages/CSWFeedback";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
       <Routes>
         <Route path="/" element={<FeedbackForm />} />
         <Route path="/feedbacks" element={<FeedbackList />} />
+        <Route path="/cswf/:acc" element={<CSWFeedbackForm />} />
+        <Route path="/cswf" element={<CSWFeedbackList />} />
       </Routes>
     </Router>
   );
