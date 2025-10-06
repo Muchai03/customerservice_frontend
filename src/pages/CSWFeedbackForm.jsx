@@ -147,7 +147,7 @@ export default function CSWFeedbackForm() {
         </label>
 
         <label>
-          Areas for improvement:
+          What should we do better/improve on?
           <textarea
             name="improvement_suggestions"
             value={formData.improvement_suggestions}
