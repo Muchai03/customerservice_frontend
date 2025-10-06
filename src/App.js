@@ -1,19 +1,42 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import FeedbackForm from "./pages/FeedbackForm";
 import FeedbackList from "./pages/FeedbackList";
 import "./App.css";
 import CSWFeedbackForm from "./pages/CSWFeedbackForm";
 import CSWFeedbackList from "./pages/CSWFeedback";
 
-function App() {
+function Navbar() {
+  const location = useLocation();
+  const isCSWFeedbackPage = location.pathname.startsWith("/cswf");
+
+  return (
+    <div className="navbar" style={{
+      background: "#0066cc",
+      color: "white",
+      padding: "10px",
+      display: "flex",
+      justifyContent: "center",
+      gap: "20px",
+      fontWeight: "bold",
+    }}>
+      {isCSWFeedbackPage ? (
+        <span>💧 Customer Service</span>
+      ) : (
+        <>
+          <Link to="/" style={{ color: "white", textDecoration: "none" }}>Form</Link>
+          <Link to="/feedbacks" style={{ color: "white", textDecoration: "none" }}>Feedbacks</Link>
+          <Link to="/cswfeedback" style={{ color: "white", textDecoration: "none" }}>CSW Feedback</Link>
+        </>
+      )}
+    </div>
+  );
+}
+
+export default function App() {
   return (
     <Router>
-      <div className="navbar">
-        <Link to="/">Form</Link>
-        <Link to="/feedbacks">Feedbacks</Link>
-        <Link to="/cswfeedback">CSW Feedback</Link>
-      </div>
+      <Navbar />
       <Routes>
         <Route path="/" element={<FeedbackForm />} />
         <Route path="/feedbacks" element={<FeedbackList />} />
@@ -24,5 +47,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;

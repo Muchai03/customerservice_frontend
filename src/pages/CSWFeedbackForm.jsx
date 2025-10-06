@@ -18,6 +18,15 @@ export default function CSWFeedbackForm() {
     latitude: "",
   });
 
+  const inputStyle = {
+    width: "100%",
+    padding: "10px",
+    borderRadius: "5px",
+    border: "1px solid #ccc",
+    boxSizing: "border-box",
+    fontSize: "16px",
+  };
+
   // Capture user location quietly on mount
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -78,12 +87,7 @@ export default function CSWFeedbackForm() {
             name="account_number"
             value={formData.account_number}
             onChange={handleChange}
-            style={{
-              width: "100%",
-              padding: "8px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
+            style={inputStyle}
           />
         </label>
 
@@ -94,13 +98,8 @@ export default function CSWFeedbackForm() {
             name="days_with_water"
             value={formData.days_with_water}
             onChange={handleChange}
-            placeholder="e.g. 7 days"
-            style={{
-              width: "100%",
-              padding: "8px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
+            placeholder="e.g. 7"
+            style={inputStyle}
           />
         </label>
 
@@ -153,12 +152,7 @@ export default function CSWFeedbackForm() {
             name="improvement_suggestions"
             value={formData.improvement_suggestions}
             onChange={handleChange}
-            style={{
-              width: "100%",
-              padding: "8px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
+            style={inputStyle}
           ></textarea>
         </label>
 
