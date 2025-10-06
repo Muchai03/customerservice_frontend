@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const API_URL = "/api/customer-service-feedback";
+const API_URL = "/api/customerswf";
 
 export default function CSWFeedbackList() {
   const [responses, setResponses] = useState([]);

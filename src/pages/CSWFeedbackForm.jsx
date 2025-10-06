@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-const API_URL = "/api/customer-service-feedback";
+const API_URL = "/api/customerswf";
 
 export default function CSWFeedbackForm() {
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ export default function CSWFeedbackForm() {
     e.preventDefault();
     try {
       await axios.post(API_URL, formData);
-      navigate("/feedbacks");
+      navigate("/thankyou");
     } catch (error) {
       console.error("❌ Error submitting feedback:", error);
       alert("Something went wrong while submitting your feedback. Please try again.");

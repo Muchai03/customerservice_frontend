@@ -5,10 +5,11 @@ import FeedbackList from "./pages/FeedbackList";
 import "./App.css";
 import CSWFeedbackForm from "./pages/CSWFeedbackForm";
 import CSWFeedbackList from "./pages/CSWFeedback";
+import ThankYouPage from "./pages/Thankyou";
 
 function Navbar() {
   const location = useLocation();
-  const isCSWFeedbackPage = location.pathname.startsWith("/cswf");
+  const isCSWFeedbackPage = location.pathname.startsWith("/cswf") || location.pathname.startsWith("/thankyou");;
 
   return (
     <div className="navbar" style={{
@@ -43,6 +44,7 @@ export default function App() {
         <Route path="/cswf/:acc" element={<CSWFeedbackForm />} />
         <Route path="/cswf/" element={<CSWFeedbackForm />} />
         <Route path="/cswfeedback" element={<CSWFeedbackList />} />
+        <Route path="/thankyou" element={<ThankYouPage />} />
       </Routes>
     </Router>
   );
