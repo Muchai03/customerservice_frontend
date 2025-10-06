@@ -24,7 +24,7 @@ export default function CSWFeedbackList() {
   return (
     <div style={{ padding: "20px" }}>
       <h1 style={{ textAlign: "center", color: "#0066cc" }}>
-        📊 Submitted Feedback
+        📊 CSW Feedback
       </h1>
 
       {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}

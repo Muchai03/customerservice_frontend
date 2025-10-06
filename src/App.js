@@ -12,7 +12,7 @@ function App() {
       <div className="navbar">
         <Link to="/">Form</Link>
         <Link to="/feedbacks">Feedbacks</Link>
-        <Link to="/feedbacks">CSW Feedback</Link>
+        <Link to="/cswfeedback">CSW Feedback</Link>
       </div>
       <Routes>
         <Route path="/" element={<FeedbackForm />} />
