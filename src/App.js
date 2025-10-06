@@ -17,7 +17,8 @@ function App() {
         <Route path="/" element={<FeedbackForm />} />
         <Route path="/feedbacks" element={<FeedbackList />} />
         <Route path="/cswf/:acc" element={<CSWFeedbackForm />} />
-        <Route path="/cswf" element={<CSWFeedbackList />} />
+        <Route path="/cswf/" element={<CSWFeedbackForm />} />
+        <Route path="/cswfeedback" element={<CSWFeedbackList />} />
       </Routes>
     </Router>
   );

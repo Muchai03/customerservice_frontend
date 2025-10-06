@@ -18,9 +18,9 @@ export default function CSWFeedbackForm() {
     latitude: "",
   });
 
-  // Capture user location on mount
+  // Capture user location quietly on mount
   useEffect(() => {
-    if (navigator.geolocation) {
+    if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           setFormData((prev) => ({
@@ -30,22 +30,24 @@ export default function CSWFeedbackForm() {
           }));
         },
         (err) => {
-          alert("Please allow location access to submit your feedback.");
-          console.error("Location error:", err);
+          // Do not alert — just silently skip if permission denied or unavailable
+          console.warn("Location not captured:", err.message);
+        },
+        {
+          enableHighAccuracy: false,
+          timeout: 5000,
+          maximumAge: 0,
         }
       );
     } else {
-      alert("Geolocation is not supported by your browser.");
+      console.warn("Geolocation not supported by this browser.");
     }
   }, []);
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    let finalValue = value;
-    if (type === "radio") {
-      finalValue = value === "true";
-    }
-    setFormData({ ...formData, [name]: finalValue });
+    const finalValue = type === "radio" ? value === "true" : value;
+    setFormData((prev) => ({ ...prev, [name]: finalValue }));
   };
 
   const handleSubmit = async (e) => {
@@ -125,11 +127,8 @@ export default function CSWFeedbackForm() {
 
         <label>
           Rate our service (0–10):
-          <input
-            type="number"
+          <select
             name="service_rating"
-            min="0"
-            max="10"
             value={formData.service_rating}
             onChange={handleChange}
             style={{
@@ -138,7 +137,14 @@ export default function CSWFeedbackForm() {
               borderRadius: "5px",
               border: "1px solid #ccc",
             }}
-          />
+          >
+            <option value="">-- Select Rating --</option>
+            {[...Array(11).keys()].map((num) => (
+              <option key={num} value={num}>
+                {num}
+              </option>
+            ))}
+          </select>
         </label>
 
         <label>
