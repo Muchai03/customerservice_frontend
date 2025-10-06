@@ -21,7 +21,7 @@ function Navbar() {
       fontWeight: "bold",
     }}>
       {isCSWFeedbackPage ? (
-        <span>💧 Customer Service</span>
+        <span>💧Githunguri Water</span>
       ) : (
         <>
           <Link to="/" style={{ color: "white", textDecoration: "none" }}>Form</Link>

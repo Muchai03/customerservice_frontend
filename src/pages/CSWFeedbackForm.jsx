@@ -72,8 +72,8 @@ export default function CSWFeedbackForm() {
 
   return (
     <div style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
-      <h1 style={{ textAlign: "center", color: "#0066cc" }}>
-        💧 GIWASCO Customer Service Week Feedback
+      <h1 style={{ textAlign: "center", color: "#0066cc", fontSize: "20px"}}>
+        🎊 Happy Customer Service Week 🎊
       </h1>
       <p style={{ textAlign: "center", color: "#0066cc" }}>Thank you for being our valued customer. Please inform us to help us serve you better.</p>
       <form
