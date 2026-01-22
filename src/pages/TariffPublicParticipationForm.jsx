@@ -157,7 +157,7 @@ export default function TariffPublicParticipationForm() {
         {formData.consent_given && (
           <>
           <label>
-              Name of respondent
+              Name of participant
               <input
                 name="respondent_name"
                 value={formData.respondent_name}
