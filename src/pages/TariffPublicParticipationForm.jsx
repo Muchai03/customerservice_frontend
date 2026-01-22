@@ -14,6 +14,7 @@ export default function TariffPublicParticipationForm() {
     ward: "",
     consent_given: null,
 
+    respondent_name: "",
     customer_status: "",
     phone_number: "",
     account_number: "",
@@ -155,6 +156,15 @@ export default function TariffPublicParticipationForm() {
 
         {formData.consent_given && (
           <>
+          <label>
+              Name of respondent
+              <input
+                name="respondent_name"
+                value={formData.respondent_name}
+                onChange={handleChange}
+                style={inputStyle}
+              />
+            </label>
             {/* Section A: Eligibility & Customer Status */}
             <label>
               Are you currently a user of the company’s water services?
