@@ -94,7 +94,7 @@ export default function TariffPublicParticipationForm() {
       });
       navigate("/thankyou");
     } catch (err) {
-      console.error(err);
+      console.error("Submission error:", err);
       alert("Failed to submit response. Please try again.");
     }
   };
@@ -155,7 +155,7 @@ export default function TariffPublicParticipationForm() {
 
         {formData.consent_given && (
           <>
-            {/* Section A */}
+            {/* Section A: Eligibility & Customer Status */}
             <label>
               Are you currently a user of the company’s water services?
               <select
@@ -197,21 +197,21 @@ export default function TariffPublicParticipationForm() {
                 </label>
 
                 <fieldset>
-                  <legend>Why are you not connected?</legend>
+                  <legend>Why are you not connected? (Select all that apply)</legend>
                   {[
-                    "no_network",
-                    "high_connection_fee",
-                    "land_tenure",
-                    "own_source",
-                    "vendors",
-                    "temporary_house"
+                    "No network coverage",
+                    "Connection fee too high",
+                    "Land tenure issues",
+                    "Use borehole/well/river",
+                    "Rely on vendors",
+                    "House is temporary",
+                    "Other"
                   ].map((r) => (
                     <label key={r} style={{ display: "block" }}>
                       <input
                         type="checkbox"
                         onChange={() => handleCheckboxArray("not_connected_reasons", r)}
-                      />{" "}
-                      {r.replaceAll("_", " ")}
+                      /> {r}
                     </label>
                   ))}
                 </fieldset>
@@ -225,9 +225,9 @@ export default function TariffPublicParticipationForm() {
                     style={inputStyle}
                   >
                     <option value="">-- Select --</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                    <option value="not_sure">Not sure</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="Not sure">Not sure</option>
                   </select>
                 </label>
               </>
@@ -244,16 +244,136 @@ export default function TariffPublicParticipationForm() {
                   style={inputStyle}
                 >
                   <option value="">-- Select --</option>
-                  <option value="individual">Individual household</option>
-                  <option value="shared">Shared</option>
-                  <option value="kiosk">Public kiosk</option>
-                  <option value="commercial">Commercial</option>
-                  <option value="institutional">Institutional</option>
+                  <option value="Individual household">Individual household</option>
+                  <option value="Shared">Shared</option>
+                  <option value="Public kiosk">Public kiosk</option>
+                  <option value="Commercial">Commercial</option>
+                  <option value="Institutional">Institutional</option>
                 </select>
               </label>
             )}
 
-            {/* Section F */}
+            {/* Section B: Respondent Profile */}
+            <label>
+              Gender
+              <select name="gender" value={formData.gender} onChange={handleChange} style={inputStyle}>
+                <option value="">-- Select --</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+              </select>
+            </label>
+
+            <label>
+              Age Group
+              <select name="age_group" value={formData.age_group} onChange={handleChange} style={inputStyle}>
+                <option value="">-- Select --</option>
+                <option value="Below 18">Below 18</option>
+                <option value="18–25">18–25</option>
+                <option value="26–35">26–35</option>
+                <option value="36–50">36–50</option>
+                <option value="51–65">51–65</option>
+                <option value="Above 65">Above 65</option>
+              </select>
+            </label>
+
+            <fieldset>
+              <legend>Do you identify as part of any vulnerable/marginalized group? (Select all that apply)</legend>
+              {[
+                "Person with disability",
+                "Elderly (65+)",
+                "Single-parent household",
+                "Low-income household",
+                "Informal settlement resident",
+                "Refugee / IDP",
+                "None",
+                "Prefer not to say"
+              ].map((v) => (
+                <label key={v} style={{ display: "block" }}>
+                  <input
+                    type="checkbox"
+                    onChange={() => handleCheckboxArray("vulnerable_groups", v)}
+                  /> {v}
+                </label>
+              ))}
+            </fieldset>
+
+            {/* Section C: Awareness */}
+            <fieldset>
+              <legend>How did you learn about the tariff? (Select all that apply)</legend>
+              {[
+                "Utility staff",
+                "Radio",
+                "Social media",
+                "Community meeting",
+                "Posters / fliers",
+                "Word of mouth",
+                "Learnt today through this exercise",
+                "Other"
+              ].map((s) => (
+                <label key={s} style={{ display: "block" }}>
+                  <input
+                    type="checkbox"
+                    onChange={() => handleCheckboxArray("tariff_awareness_sources", s)}
+                  /> {s}
+                </label>
+              ))}
+            </fieldset>
+
+            <label>
+              How well do you understand why the tariff adjustment is being proposed?
+              <select
+                name="tariff_understanding"
+                value={formData.tariff_understanding}
+                onChange={handleChange}
+                style={inputStyle}
+              >
+                <option value="">-- Select --</option>
+                <option value="Very well">Very well</option>
+                <option value="Well">Well</option>
+                <option value="Not sure">Not sure</option>
+                <option value="Poorly">Poorly</option>
+                <option value="Not at all">Not at all</option>
+              </select>
+            </label>
+
+            {/* Section E: Affordability */}
+            <label>
+              If service quality improved, would you be willing to pay slightly more?
+              <select
+                name="willing_to_pay_more"
+                value={formData.willing_to_pay_more}
+                onChange={handleChange}
+                style={inputStyle}
+              >
+                <option value="">-- Select --</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Not sure">Not sure</option>
+              </select>
+            </label>
+
+            <fieldset>
+              <legend>What matters most when paying for water? (Select up to 2)</legend>
+              {[
+                "Reliability",
+                "Water quality",
+                "Low cost",
+                "Fast customer service",
+                "Sewer services",
+                "Fair billing",
+                "Meter accuracy"
+              ].map((p) => (
+                <label key={p} style={{ display: "block" }}>
+                  <input
+                    type="checkbox"
+                    onChange={() => handleCheckboxArray("payment_priorities", p)}
+                  /> {p}
+                </label>
+              ))}
+            </fieldset>
+
+            {/* Section F: Views on Tariff */}
             <label>
               Do you support the proposed tariff adjustment?
               <select
@@ -263,9 +383,9 @@ export default function TariffPublicParticipationForm() {
                 style={inputStyle}
               >
                 <option value="">-- Select --</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-                <option value="not_sure">Not sure</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Not sure">Not sure</option>
               </select>
             </label>
 
@@ -278,6 +398,27 @@ export default function TariffPublicParticipationForm() {
                 style={inputStyle}
               />
             </label>
+
+            <fieldset>
+              <legend>What improvements do you expect if tariffs are adjusted? (Select all that apply)</legend>
+              {[
+                "More reliable supply",
+                "Expanded coverage",
+                "Better water quality",
+                "Faster leak repairs",
+                "Sewer services",
+                "Better customer care",
+                "Meter replacements",
+                "Reduced illegal connections"
+              ].map((i) => (
+                <label key={i} style={{ display: "block" }}>
+                  <input
+                    type="checkbox"
+                    onChange={() => handleCheckboxArray("expected_improvements", i)}
+                  /> {i}
+                </label>
+              ))}
+            </fieldset>
 
             <button
               type="submit"
