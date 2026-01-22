@@ -6,6 +6,7 @@ import "./App.css";
 import CSWFeedbackForm from "./pages/CSWFeedbackForm";
 import CSWFeedbackList from "./pages/CSWFeedback";
 import ThankYouPage from "./pages/Thankyou";
+import TariffPublicParticipationForm from "./pages/TariffPublicParticipationForm";
 
 function Navbar() {
   const location = useLocation();
@@ -16,7 +17,8 @@ function Navbar() {
       background: "#0066cc",
       color: "white",
       padding: "10px",
-      display: "flex",
+      width: "100%",
+      // display: "flex",
       justifyContent: "center",
       gap: "20px",
       fontWeight: "bold",
@@ -26,8 +28,8 @@ function Navbar() {
       ) : (
         <>
           <Link to="/" style={{ color: "white", textDecoration: "none" }}>Form</Link>
-          <Link to="/feedbacks" style={{ color: "white", textDecoration: "none" }}>Feedbacks</Link>
-          <Link to="/cswfeedback" style={{ color: "white", textDecoration: "none" }}>CSW Feedback</Link>
+          {/* <Link to="/feedbacks" style={{ color: "white", textDecoration: "none" }}>Feedbacks</Link>
+          <Link to="/cswfeedback" style={{ color: "white", textDecoration: "none" }}>CSW Feedback</Link> */}
         </>
       )}
     </div>
@@ -39,7 +41,9 @@ export default function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<FeedbackForm />} />
+        {/* <Route path="/" element={<FeedbackForm />} /> */}
+        <Route path="/" element={<TariffPublicParticipationForm />} />
+        <Route path="/tpp" element={<TariffPublicParticipationForm />} />
         <Route path="/feedbacks" element={<FeedbackList />} />
         <Route path="/cswf/:acc" element={<CSWFeedbackForm />} />
         <Route path="/cswf/" element={<CSWFeedbackForm />} />
