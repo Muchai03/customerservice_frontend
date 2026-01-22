@@ -1,14 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function ThankYouPage() {
   const navigate = useNavigate();
-
-  // Automatically redirect after a few seconds (optional)
-//   useEffect(() => {
-//     const timer = setTimeout(() => navigate("/"), 6000);
-//     return () => clearTimeout(timer);
-//   }, [navigate]);
 
   return (
     <div
@@ -93,6 +87,24 @@ export default function ThankYouPage() {
         We value your feedback... 
         Your input helps us improve and serve you even better. 💧
       </p>
+
+      {/* Go Home Button */}
+      <button
+        onClick={() => navigate("/")}
+        style={{
+          marginTop: "25px",
+          padding: "12px 24px",
+          backgroundColor: "#0066cc",
+          color: "#fff",
+          fontSize: "16px",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+          animation: "fadeIn 4s ease-in-out",
+        }}
+      >
+        Go to Home Page
+      </button>
 
       <style>
         {`
