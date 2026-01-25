@@ -104,9 +104,9 @@ export default function TariffPublicParticipationForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: "12 20" }}>
+      <div style={{ maxWidth: 900, margin: "0 auto", padding: 20 }}>
 
-        <h2>PUBLIC PARTICIPATION QUESTIONNAIRE ON PROPOSED WATER TARIFF ADJUSTMENT</h2>
+        <h3>PUBLIC PARTICIPATION QUESTIONNAIRE ON PROPOSED WATER TARIFF ADJUSTMENT</h3>
 
         <p><strong>Utility Name:</strong> Githunguri Water and Sanitation Company Limited (GIWASCO)</p>
 
