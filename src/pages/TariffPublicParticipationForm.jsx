@@ -104,7 +104,7 @@ export default function TariffPublicParticipationForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: 20 }}>
+      <div style={{ maxWidth: 900, margin: "0 auto", padding: "12 20" }}>
 
         <h2>PUBLIC PARTICIPATION QUESTIONNAIRE ON PROPOSED WATER TARIFF ADJUSTMENT</h2>
 
