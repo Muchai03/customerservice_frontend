@@ -6,40 +6,59 @@ const API_URL = "/api/public-participation";
 
 export default function TariffPublicParticipationForm() {
   const navigate = useNavigate();
-
   const [enumeratorName, setEnumeratorName] = useState("");
   const [terminated, setTerminated] = useState(false);
 
   const [formData, setFormData] = useState({
     ward: "",
     consent_given: null,
-
     respondent_name: "",
-    customer_status: "",
     phone_number: "",
-    account_number: "",
+
+    customer_status: "",
+
     not_connected_reasons: [],
     wants_future_connection: "",
+
+    account_number: "",
     connection_type: "",
+    length_of_service: "",
+    receives_monthly_bill: "",
 
     gender: "",
     age_group: "",
     vulnerable_groups: [],
 
+    aware_of_tariff: "",
     tariff_awareness_sources: [],
     tariff_understanding: "",
 
-    willing_to_pay_more: "",
+    service_rating: "",
+    service_challenges: [],
+    water_frequency: "",
+
+    affordability: "",
+    payment_difficulty: "",
+    pay_more_conditions: [],
+    acceptable_increase: "",
     payment_priorities: [],
 
     supports_tariff_adjustment: "",
     support_reason: "",
-    expected_improvements: []
+    expected_improvements: [],
+
+    vulnerable_negative_effect: "",
+    vulnerable_at_risk: [],
+    protection_measures: [],
+    cross_subsidy_support: "",
+
+    engagement_rating: "",
+    communication_channels: [],
+
+    main_concern: "",
+    single_improvement: ""
   });
 
-  /* ---------------------------------------------
-     Enumerator name (stored on device)
-  ----------------------------------------------*/
   useEffect(() => {
     let name = localStorage.getItem("enumerator_name");
     if (!name) {
@@ -49,403 +68,308 @@ export default function TariffPublicParticipationForm() {
     setEnumeratorName(name || "");
   }, []);
 
-  /* ---------------------------------------------
-     Helpers
-  ----------------------------------------------*/
   const inputStyle = {
     width: "100%",
     padding: "10px",
     borderRadius: "5px",
-    border: "1px solid #ccc",
-    fontSize: "15px",
-    boxSizing: "border-box"
+    border: "1px solid #ccc"
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleCheckboxArray = (field, value) => {
-    setFormData((prev) => ({
+  const toggleArray = (field, value) => {
+    setFormData(prev => ({
       ...prev,
       [field]: prev[field].includes(value)
-        ? prev[field].filter((v) => v !== value)
+        ? prev[field].filter(v => v !== value)
         : [...prev[field], value]
     }));
   };
 
-  const handleConsent = (value) => {
-    if (!value) {
-      setTerminated(true);
-    }
-    setFormData((prev) => ({ ...prev, consent_given: value }));
+  const handleConsent = (v) => {
+    if (!v) setTerminated(true);
+    setFormData(prev => ({ ...prev, consent_given: v }));
   };
 
-  /* ---------------------------------------------
-     Submit
-  ----------------------------------------------*/
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      await axios.post(API_URL, {
-        ...formData,
-        enumerator_name: enumeratorName
-      });
-      navigate("/thankyou");
-    } catch (err) {
-      console.error("Submission error:", err);
-      alert("Failed to submit response. Please try again.");
-    }
+    await axios.post(API_URL, { ...formData, enumerator_name: enumeratorName });
+    navigate("/thankyou");
   };
 
-  /* ---------------------------------------------
-     Early termination (no consent)
-  ----------------------------------------------*/
-  if (terminated) {
-    return (
-      <div style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
-        <h3>Thank you.</h3>
-        <p>You have chosen not to participate in this consultation.</p>
-      </div>
-    );
-  }
+  if (terminated) return <p>Interview terminated – consent not given.</p>;
 
-  /* ---------------------------------------------
-     Render
-  ----------------------------------------------*/
   return (
-    <div style={{ maxWidth: "700px", margin: "0 auto", padding: "20px" }}>
-      <h2 style={{ textAlign: "center", color: "#0066cc" }}>
-        Public Participation on Proposed Water Tariff Adjustment
-      </h2>
+    <form onSubmit={handleSubmit}>
+      <div style={{ maxWidth: 900, margin: "0 auto", padding: 20 }}>
 
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+        <h2>PUBLIC PARTICIPATION QUESTIONNAIRE ON PROPOSED WATER TARIFF ADJUSTMENT</h2>
 
-        {/* Location */}
-        <label>
-          Location / Ward
-          <input
-            name="ward"
-            value={formData.ward}
-            onChange={handleChange}
-            required
-            style={inputStyle}
-          />
-        </label>
+        <p><strong>Utility Name:</strong> Githunguri Water and Sanitation Company Limited (GIWASCO)</p>
 
-        {/* Consent */}
-        <fieldset>
-          <legend><strong>Consent to Participate</strong></legend>
-          <label>
-            <input
-              type="radio"
-              name="consent"
-              onChange={() => handleConsent(true)}
-            /> Yes
-          </label>{" "}
-          <label style={{ marginLeft: "15px" }}>
-            <input
-              type="radio"
-              name="consent"
-              onChange={() => handleConsent(false)}
-            /> No
-          </label>
-        </fieldset>
+        <p>
+          You are invited to participate in a public consultation on the proposed upward water tariff adjustment by
+          Githunguri Water and Sanitation Company Limited. The purpose of this exercise is to collect views, experiences,
+          and concerns from customers and members of the public to inform decision-making.
+        </p>
+
+        <p>
+          The feedback collected will form part of the evidence submitted to the Water Services Regulatory Board (WASREB)
+          in support of the tariff application. Public participation informs the decision-making process but does not by
+          itself determine the final tariff outcome.
+        </p>
+
+        <p>
+          Your participation is voluntary. You may decline to answer any question. All information will be treated
+          confidentially and used strictly for reporting, planning, and regulatory compliance purposes. No personal
+          identifiers will be disclosed.
+        </p>
+
+        <p><strong>Do you consent to participate in this survey?</strong></p>
+
+        <label><input type="radio" onChange={()=>handleConsent(true)} /> Yes</label>
+        <label><input type="radio" onChange={()=>handleConsent(false)} /> No (If No, terminate interview)</label>
 
         {formData.consent_given && (
+        <>
+          <p>Location / Ward *</p>
+          <input required name="ward" onChange={handleChange} style={inputStyle} />
+
+          <p>Name of participant </p>
+          <input
+            name="respondent_name"
+            value={formData.respondent_name}
+            onChange={handleChange}
+            style={inputStyle}
+          />
+          <p>Phone number of participant </p>
+          <input
+            name="phone_number"
+            value={formData.phone_number}
+            onChange={handleChange}
+            style={inputStyle}
+          />
+              
+          
+          <h3>SECTION A: ELIGIBILITY & CUSTOMER STATUS (MANDATORY)</h3>
+
+          <p>A1. Are you currently a user of GIWASCO water services?</p>
+
+          <select required name="customer_status" onChange={handleChange} style={inputStyle}>
+            <option value="">-- Select --</option>
+            <option value="registered_customer">Yes, registered customer</option>
+            <option value="shared_connection">Yes, shared connection / kiosk / standpipe</option>
+            <option value="vendor_supplied">Yes, buy from vendors supplied by GIWASCO</option>
+            <option value="not_served">No, not currently served</option>
+          </select>
+
+          {formData.customer_status === "not_served" && (
           <>
-          <label>
-              Name of participant
-              <input
-                name="respondent_name"
-                value={formData.respondent_name}
-                onChange={handleChange}
-                style={inputStyle}
-              />
-            </label>
-            {/* Section A: Eligibility & Customer Status */}
-            <label>
-              Are you currently a user of the company’s water services?
-              <select
-                name="customer_status"
-                value={formData.customer_status}
-                onChange={handleChange}
-                required
-                style={inputStyle}
-              >
-                <option value="">-- Select --</option>
-                <option value="registered_customer">Registered customer</option>
-                <option value="shared_connection">Shared connection / kiosk</option>
-                <option value="vendor_supplied">Buy from vendors</option>
-                <option value="not_served">Not currently served</option>
-              </select>
-            </label>
+            <p>A2. For Non-Customers Only – Why are you not currently connected?</p>
 
-            <label>
-              Phone Number (optional)
-              <input
-                name="phone_number"
-                value={formData.phone_number}
-                onChange={handleChange}
-                style={inputStyle}
-              />
-            </label>
-
-            {/* Non-customer */}
-            {formData.customer_status === "not_served" && (
-              <>
-                <label>
-                  Account Number (if any)
-                  <input
-                    name="account_number"
-                    value={formData.account_number}
-                    onChange={handleChange}
-                    style={inputStyle}
-                  />
-                </label>
-
-                <fieldset>
-                  <legend>Why are you not connected? (Select all that apply)</legend>
-                  {[
-                    "No network coverage",
-                    "Connection fee too high",
-                    "Land tenure issues",
-                    "Use borehole/well/river",
-                    "Rely on vendors",
-                    "House is temporary",
-                    "Other"
-                  ].map((r) => (
-                    <label key={r} style={{ display: "block" }}>
-                      <input
-                        type="checkbox"
-                        onChange={() => handleCheckboxArray("not_connected_reasons", r)}
-                      /> {r}
-                    </label>
-                  ))}
-                </fieldset>
-
-                <label>
-                  Would you like to be connected in the future?
-                  <select
-                    name="wants_future_connection"
-                    value={formData.wants_future_connection}
-                    onChange={handleChange}
-                    style={inputStyle}
-                  >
-                    <option value="">-- Select --</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                    <option value="Not sure">Not sure</option>
-                  </select>
-                </label>
-              </>
+            {["No network coverage","Connection fee too high","Land tenure issues","Use borehole / well / river","Rely on vendors","Temporary housing"].map(x =>
+              <label key={x}><input type="checkbox" onChange={()=>toggleArray("not_connected_reasons",x)} /> {x}</label>
             )}
 
-            {/* Customers */}
-            {formData.customer_status !== "not_served" && (
-              <label>
-                Type of connection
-                <select
-                  name="connection_type"
-                  value={formData.connection_type}
-                  onChange={handleChange}
-                  style={inputStyle}
-                >
-                  <option value="">-- Select --</option>
-                  <option value="Individual household">Individual household</option>
-                  <option value="Shared">Shared</option>
-                  <option value="Public kiosk">Public kiosk</option>
-                  <option value="Commercial">Commercial</option>
-                  <option value="Institutional">Institutional</option>
-                </select>
-              </label>
-            )}
+            <p>Would you like to be connected in future if services become available and affordable?</p>
 
-            {/* Section B: Respondent Profile */}
-            <label>
-              Gender
-              <select name="gender" value={formData.gender} onChange={handleChange} style={inputStyle}>
-                <option value="">-- Select --</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Prefer not to say">Prefer not to say</option>
-              </select>
-            </label>
-
-            <label>
-              Age Group
-              <select name="age_group" value={formData.age_group} onChange={handleChange} style={inputStyle}>
-                <option value="">-- Select --</option>
-                <option value="Below 18">Below 18</option>
-                <option value="18–25">18–25</option>
-                <option value="26–35">26–35</option>
-                <option value="36–50">36–50</option>
-                <option value="51–65">51–65</option>
-                <option value="Above 65">Above 65</option>
-              </select>
-            </label>
-
-            <fieldset>
-              <legend>Do you identify as part of any vulnerable/marginalized group? (Select all that apply)</legend>
-              {[
-                "Person with disability",
-                "Elderly (65+)",
-                "Single-parent household",
-                "Low-income household",
-                "Informal settlement resident",
-                "Refugee / IDP",
-                "None",
-                "Prefer not to say"
-              ].map((v) => (
-                <label key={v} style={{ display: "block" }}>
-                  <input
-                    type="checkbox"
-                    onChange={() => handleCheckboxArray("vulnerable_groups", v)}
-                  /> {v}
-                </label>
-              ))}
-            </fieldset>
-
-            {/* Section C: Awareness */}
-            <fieldset>
-              <legend>How did you learn about the tariff? (Select all that apply)</legend>
-              {[
-                "Utility staff",
-                "Radio",
-                "Social media",
-                "Community meeting",
-                "Posters / fliers",
-                "Word of mouth",
-                "Learnt today through this exercise",
-                "Other"
-              ].map((s) => (
-                <label key={s} style={{ display: "block" }}>
-                  <input
-                    type="checkbox"
-                    onChange={() => handleCheckboxArray("tariff_awareness_sources", s)}
-                  /> {s}
-                </label>
-              ))}
-            </fieldset>
-
-            <label>
-              How well do you understand why the tariff adjustment is being proposed?
-              <select
-                name="tariff_understanding"
-                value={formData.tariff_understanding}
-                onChange={handleChange}
-                style={inputStyle}
-              >
-                <option value="">-- Select --</option>
-                <option value="Very well">Very well</option>
-                <option value="Well">Well</option>
-                <option value="Not sure">Not sure</option>
-                <option value="Poorly">Poorly</option>
-                <option value="Not at all">Not at all</option>
-              </select>
-            </label>
-
-            {/* Section E: Affordability */}
-            <label>
-              If service quality improved, would you be willing to pay slightly more?
-              <select
-                name="willing_to_pay_more"
-                value={formData.willing_to_pay_more}
-                onChange={handleChange}
-                style={inputStyle}
-              >
-                <option value="">-- Select --</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-                <option value="Not sure">Not sure</option>
-              </select>
-            </label>
-
-            <fieldset>
-              <legend>What matters most when paying for water? (Select up to 2)</legend>
-              {[
-                "Reliability",
-                "Water quality",
-                "Low cost",
-                "Fast customer service",
-                "Sewer services",
-                "Fair billing",
-                "Meter accuracy"
-              ].map((p) => (
-                <label key={p} style={{ display: "block" }}>
-                  <input
-                    type="checkbox"
-                    onChange={() => handleCheckboxArray("payment_priorities", p)}
-                  /> {p}
-                </label>
-              ))}
-            </fieldset>
-
-            {/* Section F: Views on Tariff */}
-            <label>
-              Do you support the proposed tariff adjustment?
-              <select
-                name="supports_tariff_adjustment"
-                value={formData.supports_tariff_adjustment}
-                onChange={handleChange}
-                style={inputStyle}
-              >
-                <option value="">-- Select --</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-                <option value="Not sure">Not sure</option>
-              </select>
-            </label>
-
-            <label>
-              Why?
-              <textarea
-                name="support_reason"
-                value={formData.support_reason}
-                onChange={handleChange}
-                style={inputStyle}
-              />
-            </label>
-
-            <fieldset>
-              <legend>What improvements do you expect if tariffs are adjusted? (Select all that apply)</legend>
-              {[
-                "More reliable supply",
-                "Expanded coverage",
-                "Better water quality",
-                "Faster leak repairs",
-                "Sewer services",
-                "Better customer care",
-                "Meter replacements",
-                "Reduced illegal connections"
-              ].map((i) => (
-                <label key={i} style={{ display: "block" }}>
-                  <input
-                    type="checkbox"
-                    onChange={() => handleCheckboxArray("expected_improvements", i)}
-                  /> {i}
-                </label>
-              ))}
-            </fieldset>
-
-            <button
-              type="submit"
-              style={{
-                padding: "12px",
-                background: "#0066cc",
-                color: "#fff",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer"
-              }}
-            >
-              Submit Response
-            </button>
+            <select required name="wants_future_connection" onChange={handleChange} style={inputStyle}>
+              <option value="">-- Select --</option>
+              <option>Yes</option><option>No</option><option>Not sure</option>
+            </select>
           </>
+          )}
+
+          {formData.customer_status !== "not_served" && (
+            <>
+            <h3>SECTION B: SERVICE ACCESS & CONNECTION DETAILS (Customers Only)</h3>
+
+            <p>Water Connection/Account number of participant </p>
+            <input
+              name="account_number"
+              value={formData.account_number}
+              onChange={handleChange}
+              style={inputStyle}
+            />
+
+            <p>B1. What type of water connection do you use?</p>
+            <select required name="connection_type" onChange={handleChange} style={inputStyle}>
+              <option value="">-- Select --</option>
+              <option>Individual household connection</option>
+              <option>Shared yard connection</option>
+              <option>Public standpipe / kiosk</option>
+            </select>
+
+            <p>B2. How long have you been using GIWASCO water services?</p>
+            <select required name="length_of_service" onChange={handleChange} style={inputStyle}>
+              <option value="">-- Select --</option>
+              <option>Less than 1 year</option>
+              <option>1–3 years</option>
+              <option>More than 3 years</option>
+            </select>
+
+            <p>B3. Do you receive a monthly water bill?</p>
+            <select required name="receives_monthly_bill" onChange={handleChange} style={inputStyle}>
+              <option value="">-- Select --</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+            </>
+          )}
+
+          <h3>SECTION C: SOCIO-DEMOGRAPHIC INFORMATION</h3>
+
+          <p>C1. Gender</p>
+          <select required name="gender" onChange={handleChange} style={inputStyle}>
+            <option value="">-- Select --</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Prefer not to say</option>
+          </select>
+
+          <p>C2. Age Group</p>
+          <select required name="age_group" onChange={handleChange} style={inputStyle}>
+            <option value="">-- Select --</option>
+            <option>18–25</option>
+            <option>26–35</option>
+            <option>36–45</option>
+            <option>46–60</option>
+            <option>Above 60</option>
+          </select>
+
+          <p>C3. Do you belong to any vulnerable group?</p>
+          {["Persons with disability","Elderly","Female-headed household","Low-income household"].map(x =>
+          <label key={x}><input type="checkbox" onChange={()=>toggleArray("vulnerable_groups",x)} /> {x}</label>
+          )}
+
+          <h3>SECTION D: AWARENESS OF PROPOSED TARIFF ADJUSTMENT</h3>
+
+          <p>D1. Were you aware of the proposed tariff adjustment?</p>
+          <select required name="aware_of_tariff" onChange={handleChange} style={inputStyle}>
+          <option value="">-- Select --</option>
+          <option>Yes</option><option>No</option>
+          </select>
+
+          <p>D2. Source of information (select all applicable)</p>
+          {["Radio","Community meetings","GIWASCO staff","Posters / notices","Social media"].map(x =>
+          <label key={x}><input type="checkbox" onChange={()=>toggleArray("tariff_awareness_sources",x)} /> {x}</label>
+          )}
+
+          <p>D3. How well do you understand the proposed changes?</p>
+          <select required name="tariff_understanding" onChange={handleChange} style={inputStyle}>
+          <option value="">-- Select --</option>
+          <option>Very well</option>
+          <option>Somewhat</option>
+          <option>Not well</option>
+          </select>
+
+          <h3>SECTION E: SERVICE QUALITY & EXPERIENCE</h3>
+
+          <p>E1. Overall service rating</p>
+          <select required name="service_rating" onChange={handleChange} style={inputStyle}>
+          <option value="">-- Select --</option>
+          <option>Excellent</option><option>Good</option><option>Fair</option><option>Poor</option>
+          </select>
+
+          <p>E2. Main service challenges (select all applicable)</p>
+          {["Low pressure","Frequent interruptions","Water quality issues","Billing problems","Slow response"].map(x =>
+          <label key={x}><input type="checkbox" onChange={()=>toggleArray("service_challenges",x)} /> {x}</label>
+          )}
+
+          <p>E3. Frequency of water availability</p>
+          <select required name="water_frequency" onChange={handleChange} style={inputStyle}>
+          <option value="">-- Select --</option>
+          <option>Daily</option><option>Several days per week</option><option>Occasionally</option>
+          </select>
+
+          <h3>SECTION F: AFFORDABILITY & WILLINGNESS TO PAY</h3>
+
+          <p>F1. Is current water bill affordable?</p>
+          <select required name="affordability" onChange={handleChange} style={inputStyle}>
+          <option value="">-- Select --</option>
+          <option>Yes</option><option>No</option>
+          </select>
+
+          <p>F2. Do you experience payment difficulties?</p>
+          <select required name="payment_difficulty" onChange={handleChange} style={inputStyle}>
+          <option value="">-- Select --</option>
+          <option>Yes</option><option>No</option>
+          </select>
+
+          <p>F3. Under what conditions would you accept paying more?</p>
+          {["Improved reliability","Better quality","Expanded coverage","Faster repairs"].map(x =>
+          <label key={x}><input type="checkbox" onChange={()=>toggleArray("pay_more_conditions",x)} /> {x}</label>
+          )}
+
+          <p>F4. What increase would be acceptable?</p>
+          <select required name="acceptable_increase" onChange={handleChange} style={inputStyle}>
+          <option value="">-- Select --</option>
+          <option>Up to 10%</option>
+          <option>10–20%</option>
+          <option>Above 20%</option>
+          </select>
+
+          <h3>SECTION G: SUPPORT FOR TARIFF ADJUSTMENT</h3>
+
+          <p>G1. Do you support the proposed tariff adjustment?</p>
+          <select required name="supports_tariff_adjustment" onChange={handleChange} style={inputStyle}>
+          <option value="">-- Select --</option>
+          <option>Yes</option><option>No</option><option>Undecided</option>
+          </select>
+
+          <p>G2. Reason for your position</p>
+          <textarea required name="support_reason" onChange={handleChange} style={inputStyle} />
+
+          <p>G3. Expected improvements (select all)</p>
+          {["Network expansion","Better pressure","Cleaner water","Customer service"].map(x =>
+          <label key={x}><input type="checkbox" onChange={()=>toggleArray("expected_improvements",x)} /> {x}</label>
+          )}
+
+          <h3>SECTION H: VULNERABLE GROUPS & COMMUNICATION</h3>
+
+          <p>H1. Will tariff adjustment negatively affect vulnerable households?</p>
+          <select required name="vulnerable_negative_effect" onChange={handleChange} style={inputStyle}>
+          <option value="">-- Select --</option>
+          <option>Yes</option><option>No</option>
+          </select>
+
+          <p>H2. Who is most at risk?</p>
+          {["Elderly","Persons with disability","Low-income families"].map(x =>
+          <label key={x}><input type="checkbox" onChange={()=>toggleArray("vulnerable_at_risk",x)} /> {x}</label>
+          )}
+
+          <p>H3. Preferred protection measures</p>
+          {["Lifeline tariffs","Targeted subsidies","Flexible payment"].map(x =>
+          <label key={x}><input type="checkbox" onChange={()=>toggleArray("protection_measures",x)} /> {x}</label>
+          )}
+
+          <p>H4. Do you support cross-subsidy?</p>
+          <select required name="cross_subsidy_support" onChange={handleChange} style={inputStyle}>
+          <option value="">-- Select --</option>
+          <option>Yes</option><option>No</option>
+          </select>
+
+          <p>H5. Preferred communication channels</p>
+          {["SMS","Radio","Community meetings","Social media"].map(x =>
+          <label key={x}><input type="checkbox" onChange={()=>toggleArray("communication_channels",x)} /> {x}</label>
+          )}
+
+          <h3>SECTION I: FINAL FEEDBACK</h3>
+
+          <p>Main concern regarding tariff adjustment:</p>
+          <textarea required name="main_concern" onChange={handleChange} style={inputStyle} />
+
+          <p>Single most important improvement expected:</p>
+          <textarea required name="single_improvement" onChange={handleChange} style={inputStyle} />
+
+          <button type="submit">Submit Response</button>
+        </>
         )}
-      </form>
-    </div>
+
+      </div>
+    </form>
   );
 }
