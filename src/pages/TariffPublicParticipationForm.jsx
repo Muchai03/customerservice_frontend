@@ -257,7 +257,7 @@ export default function TariffPublicParticipationForm() {
           </select>
 
           <p>C2. Source of information (select all applicable)</p>
-          {["Radio","Community meetings","GIWASCO staff","Posters/notices","Social media", "SMS", "Website", "Word of mouth"].map(x =>
+          {["Radio","Community meetings","Learnt today through this exercise","GIWASCO staff","Posters/notices","Social media", "SMS", "Website", "Word of mouth"].map(x =>
           <label key={x}><input type="checkbox" onChange={()=>toggleArray("tariff_awareness_sources",x)} /> {x}</label>
           )}
 
@@ -369,7 +369,7 @@ export default function TariffPublicParticipationForm() {
           <option>Good</option><option>Fair</option><option>Poor</option><option>Very poor</option>
           </select>
 
-          <p>G5. Preferred communication channels</p>
+          <p>H2. Preferred communication channels</p>
           {["SMS","Radio","Community meetings","Social media", "Website", "Posters", "Email", "Chiefs’ barazas", "Door-to-door"].map(x =>
           <label key={x}><input type="checkbox" onChange={()=>toggleArray("communication_channels",x)} /> {x}</label>
           )}
@@ -382,7 +382,23 @@ export default function TariffPublicParticipationForm() {
           <p>Which is the single most important improvement expected:</p>
           <textarea required name="single_improvement" onChange={handleChange} style={inputStyle} />
 
-          <button type="submit">Submit Response</button>
+          <div style={{ width: "100%" }}>
+            <button
+              type="submit"
+              style={{
+                display: "block",       // <-- add this
+                margin: "10px auto",
+                padding: "10px",
+                background: "#0066cc",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer",
+              }}
+            >
+              Submit Response
+            </button>
+          </div>
         </>
         )}
 
