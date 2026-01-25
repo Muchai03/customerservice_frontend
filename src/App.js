@@ -27,7 +27,7 @@ function Navbar() {
         <span>💧Githunguri Water</span>
       ) : (
         <>
-          <Link to="/" style={{ color: "white", textDecoration: "none" }}>Form</Link>
+          <Link to="/" style={{ color: "white", textDecoration: "none" }}>Feedback Form</Link>
           {/* <Link to="/feedbacks" style={{ color: "white", textDecoration: "none" }}>Feedbacks</Link>
           <Link to="/cswfeedback" style={{ color: "white", textDecoration: "none" }}>CSW Feedback</Link> */}
         </>
