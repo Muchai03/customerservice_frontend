@@ -270,40 +270,48 @@ export default function TariffPublicParticipationForm() {
           <option>Not at all</option>
           </select>
 
-          <h3>SECTION D: SERVICE QUALITY & EXPERIENCE</h3>
+          {formData.customer_status !== "not_served" && (
+          <>
+            <h3>SECTION D: SERVICE QUALITY & EXPERIENCE</h3>
 
-          <p>D1. Overall service rating</p>
-          <select required name="service_rating" onChange={handleChange} style={inputStyle}>
-          <option value="">-- Select --</option>
-          <option>Excellent</option><option>Good</option><option>Fair</option><option>Poor</option><option>Very poor</option>
-          </select>
+            <p>D1. Overall service rating</p>
+            <select required name="service_rating" onChange={handleChange} style={inputStyle}>
+            <option value="">-- Select --</option>
+            <option>Excellent</option><option>Good</option><option>Fair</option><option>Poor</option><option>Very poor</option>
+            </select>
 
-          <p>D2. Main service challenges (select all applicable)</p>
-          {["Low pressure","Frequent interruptions","Poor water quality","Billing errors/disputes", "High bills", "Slow response", "Sewer overflows/no sewer", "Long distance to water point", "No connection"].map(x =>
-          <label key={x}><input type="checkbox" onChange={()=>toggleArray("service_challenges",x)} /> {x}</label>
+            <p>D2. Main service challenges (select all applicable)</p>
+            {["Low pressure","Frequent interruptions","Poor water quality","Billing errors/disputes", "High bills", "Slow response", "Sewer overflows/no sewer", "Long distance to water point", "No connection"].map(x =>
+            <label key={x}><input type="checkbox" onChange={()=>toggleArray("service_challenges",x)} /> {x}</label>
+            )}
+
+            <p>D3. Frequency of water availability</p>
+            <select required name="water_frequency" onChange={handleChange} style={inputStyle}>
+            <option value="">-- Select --</option>
+            <option>Daily</option><option>Several days per week</option> <option>Once a week</option><option>Rarely</option><option>Never</option>
+            </select>
+          </>
           )}
-
-          <p>D3. Frequency of water availability</p>
-          <select required name="water_frequency" onChange={handleChange} style={inputStyle}>
-          <option value="">-- Select --</option>
-          <option>Daily</option><option>Several days per week</option> <option>Once a week</option><option>Rarely</option><option>Never</option>
-          </select>
 
           <h3>SECTION E: AFFORDABILITY & WILLINGNESS TO PAY</h3>
 
-          <p>E1. Is current water bill affordable?</p>
-          <select required name="affordability" onChange={handleChange} style={inputStyle}>
-          <option value="">-- Select --</option>
-          <option>Yes</option><option>No</option>
-          </select>
 
-          <p>E2. Do you struggle to pay on time?</p>
-          <select required name="payment_difficulty" onChange={handleChange} style={inputStyle}>
-          <option value="">-- Select --</option>
-          <option>Sometimes</option><option>Rarely</option><option>Never</option>
-          </select>
+          {formData.customer_status !== "not_served" && (
+          <>
+            <p>E1. Is current water bill affordable?</p>
+            <select required name="affordability" onChange={handleChange} style={inputStyle}>
+            <option value="">-- Select --</option>
+            <option>Yes</option><option>No</option>
+            </select>
+            <p>E2. Do you struggle to pay on time?</p>
+            <select required name="payment_difficulty" onChange={handleChange} style={inputStyle}>
+            <option value="">-- Select --</option>
+            <option>Sometimes</option><option>Rarely</option><option>Never</option>
+            </select>
+          </>
+          )}
 
-          <p>E3. Under what conditions would you accept paying more?</p>
+          <p>E3. Under what conditions would you accept paying more for water?</p>
           {["Improved reliability","Better water quality","Expanded coverage","Faster repairs", "Sewer services improvement", "None"].map(x =>
           <label key={x}><input type="checkbox" onChange={()=>toggleArray("pay_more_conditions",x)} /> {x}</label>
           )}
