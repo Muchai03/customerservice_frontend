@@ -39,6 +39,7 @@ export default function TariffPublicParticipationForm() {
 
     affordability: "",
     payment_difficulty: "",
+    willing_to_pay_more: "",
     pay_more_conditions: [],
     acceptable_increase: "",
     payment_priorities: [],
@@ -308,15 +309,20 @@ export default function TariffPublicParticipationForm() {
             <option value="">-- Select --</option>
             <option>Sometimes</option><option>Rarely</option><option>Never</option>
             </select>
+            <p>E3. If service quality improved (reliability, water quality, faster repairs, customer service), would you be willing to pay slightly more?</p>
+            <select required name="willing_to_pay_more" onChange={handleChange} style={inputStyle}>
+            <option value="">-- Select --</option>
+            <option>Yes</option><option>No</option>
+            </select>
           </>
           )}
 
-          <p>E3. Under what conditions would you accept paying more for water?</p>
+          <p>E4. Under what conditions would you accept paying more for water?</p>
           {["Improved reliability","Better water quality","Expanded coverage","Faster repairs", "Sewer services improvement", "None"].map(x =>
           <label key={x}><input type="checkbox" onChange={()=>toggleArray("pay_more_conditions",x)} /> {x}</label>
           )}
 
-          <p>E4. What increase would be acceptable?</p>
+          <p>E5. What increase would be acceptable?</p>
           <select required name="acceptable_increase" onChange={handleChange} style={inputStyle}>
           <option value="">-- Select --</option>
           <option>Up to 10%</option>
@@ -325,7 +331,7 @@ export default function TariffPublicParticipationForm() {
           <option>No increase acceptable</option>
           </select>
 
-          <p>E4. What do you consider the most important factors when paying for water? (select up to 2)</p>
+          <p>E6. What do you consider the most important factors when paying for water? (select up to 2)</p>
           {["Water quality","Consistent water flow","Fair billing","Meter accuracy","Customer service", "Sewer services"].map(x =>
           <label key={x}><input type="checkbox" onChange={()=>toggleArray("payment_priorities",x)} /> {x}</label>
           )}
