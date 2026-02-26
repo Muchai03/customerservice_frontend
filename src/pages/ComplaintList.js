@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import * as XLSX from "xlsx";
 
-const API_URL = "http://localhost:5000/complaints";
+const API_URL = "/api/complaints";
 
 function ComplaintsList() {
   const [complaints, setComplaints] = useState([]);

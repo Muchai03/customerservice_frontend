@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:5000/complaints";
+// const API_URL = "http://localhost:5000/complaints";
+const API_URL = "/api/complaints";
 
 const complaintCategories = {
   "Supply Issues": [
